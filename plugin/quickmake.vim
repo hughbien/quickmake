@@ -1,16 +1,17 @@
 if !exists("g:quickmake_terminal")
   let g:quickmake_height = 20
+  let g:quickmake_bufname = "__quickmake__"
 
   function quickmake#is_created()
-    return bufexists("quickmake") == 1
+    return bufexists(g:quickmake_bufname) == 1
   endfunction
 
   function quickmake#is_visible()
-    return bufwinnr("quickmake") != -1
+    return bufwinnr(g:quickmake_bufname) != -1
   endfunction
 
   function quickmake#is_full()
-    let quickmake_winnr = bufwinnr("quickmake")
+    let quickmake_winnr = bufwinnr(g:quickmake_bufname)
     return winheight(quickmake_winnr) > g:quickmake_height
   endfunction
 
@@ -21,11 +22,11 @@ if !exists("g:quickmake_terminal")
       exe "term"
       exe "resize " . g:quickmake_height
     end
-    exe "file quickmake"
+    exe "file " . g:quickmake_bufname
   endfunction
 
   function quickmake#destroy()
-    exe "bdelete! quickmake"
+    exe "bdelete! " . g:quickmake_bufname
   endfunction
 
   function quickmake#show(full = 0)
@@ -35,9 +36,9 @@ if !exists("g:quickmake_terminal")
       if winnr("$") > 1 " close last window if more than one
         execute winnr("$") . "wincmd c"
       endif
-      exe "vert sbuffer quickmake"
+      exe "vert sbuffer " . g:quickmake_bufname
     elseif quickmake#is_created()
-      exe "sbuffer quickmake"
+      exe "sbuffer " . g:quickmake_bufname
       exe "resize " . g:quickmake_height
     else
       call quickmake#create(a:full)
@@ -46,7 +47,7 @@ if !exists("g:quickmake_terminal")
 
   function quickmake#hide()
     if quickmake#is_visible()
-      let quickmake_winnr = bufwinnr("quickmake")
+      let quickmake_winnr = bufwinnr(g:quickmake_bufname)
       exe "close " . quickmake_winnr
     endif
   endfunction
