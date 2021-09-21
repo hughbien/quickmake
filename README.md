@@ -55,7 +55,6 @@ endfunction
 
 ## TODO
 
-* shortcut to close/exit terminal process
 * shortcut to run makeprg (and opens terminal if NOT open) with arg
 * shortcut to run makeprg using last arg
 * shortcut to set makeprg (via pre-configured list, for autotest/compile/lint/lintfix/custom/etc...)

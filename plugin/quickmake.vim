@@ -76,4 +76,6 @@ if !exists("g:quickmake_terminal")
   tmap <C-W>t <C-W>:call quickmake#toggle()<CR>
   nmap <C-W>y :call quickmake#toggle_full()<CR>
   tmap <C-W>y <C-W>:call quickmake#toggle_full()<CR>
+  nmap <C-W>C :call quickmake#destroy()<CR>
+  tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
 endif
