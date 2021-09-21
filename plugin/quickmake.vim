@@ -15,14 +15,25 @@ if !exists("g:quickmake_terminal")
     return winheight(quickmake_winnr) > g:quickmake_height
   endfunction
 
-  function quickmake#create(full)
+  function quickmake#create(full = 0, command = "")
     if a:full
-      exe "vert term"
+      let term = "vert term"
     else
-      exe "term"
+      let term = "term"
+    endif
+
+    if a:command != ""
+      exe term " " . a:command
+    else
+      exe term
+    endif
+
+    if a:full == 0
       exe "resize " . g:quickmake_height
-    end
+    endif
+
     exe "file " . g:quickmake_bufname
+    exe "set nonu"
   endfunction
 
   function quickmake#destroy()
@@ -72,10 +83,21 @@ if !exists("g:quickmake_terminal")
     call quickmake#show(1)
   endfunction
 
+  function quickmake#make(...)
+    let full = quickmake#is_full()
+    if quickmake#is_created()
+      call quickmake#destroy()
+    endif
+
+    call quickmake#create(full, &makeprg . " " . join(a:000))
+  endfunction
+
   nmap <C-W>t :call quickmake#toggle()<CR>
   tmap <C-W>t <C-W>:call quickmake#toggle()<CR>
   nmap <C-W>y :call quickmake#toggle_full()<CR>
   tmap <C-W>y <C-W>:call quickmake#toggle_full()<CR>
   nmap <C-W>C :call quickmake#destroy()<CR>
   tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
+
+  command! -nargs=* QuickMake call quickmake#make(<f-args>)
 endif
