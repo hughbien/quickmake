@@ -55,10 +55,6 @@ endfunction
 
 ## TODO
 
-* create plugin directory structure/files
-* link to local vimrc
-* shortcut to toggle terminal window
-* shortcut to toggle terminal window in vertical mode (or move to vertical mode)
 * shortcut to close/exit terminal process
 * shortcut to run makeprg (and opens terminal if NOT open) with arg
 * shortcut to run makeprg using last arg
