@@ -52,6 +52,7 @@ if !exists("g:quickmake_terminal")
 
     exe "file " . g:quickmake_bufname
     exe "set nonu"
+    exe "set buftype=nofile"
   endfunction
 
   function quickmake#destroy()
