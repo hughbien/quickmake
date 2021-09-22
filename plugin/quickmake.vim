@@ -37,7 +37,7 @@ if !exists("g:quickmake_terminal")
   endfunction
 
   function quickmake#destroy()
-    exe "bdelete! " . g:quickmake_bufname
+    exe "bwipeout! " . g:quickmake_bufname
   endfunction
 
   function quickmake#show(full = 0)
@@ -52,6 +52,9 @@ if !exists("g:quickmake_terminal")
       exe "sbuffer " . g:quickmake_bufname
       exe "resize " . g:quickmake_height
     else
+      if a:full && winnr("$") > 1 " close last window if more than one
+        execute winnr("$") . "wincmd c"
+      endif
       call quickmake#create(a:full)
     endif
   endfunction
