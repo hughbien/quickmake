@@ -55,7 +55,6 @@ endfunction
 
 ## TODO
 
-* fix % usage (evaluate command before moving to corner)
 * setting for line numbers
 * setting for default height (or default to full)
 * setting for buffer name

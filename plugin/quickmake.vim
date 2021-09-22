@@ -113,8 +113,14 @@ if !exists("g:quickmake_terminal")
       call quickmake#destroy()
     endif
 
+    " expand command before moving to corner, or % will be incorrect
+    let parts = [&makeprg]
+    for part in a:000
+      call add(parts, expand(part))
+    endfor
+
     call quickmake#move_to_corner()
-    call quickmake#create(full, &makeprg . " " . join(a:000))
+    call quickmake#create(full, join(parts))
   endfunction
 
   function quickmake#list_prgs()
