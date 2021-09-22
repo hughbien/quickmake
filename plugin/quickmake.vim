@@ -2,6 +2,7 @@ if !exists("g:quickmake_terminal")
   let g:quickmake_height = 20
   let g:quickmake_bufname = "__quickmake__"
   let g:quickmake_position = "right"
+  let g:quickmake_prgs = ["make", "crystal spec", "crystal run", "crystal build --release"]
 
   function quickmake#is_created()
     return bufexists(g:quickmake_bufname) == 1
@@ -115,6 +116,40 @@ if !exists("g:quickmake_terminal")
     call quickmake#create(full, &makeprg . " " . join(a:000))
   endfunction
 
+  function quickmake#list_prgs()
+    let output = ""
+    let index = 0
+
+    if index(g:quickmake_prgs, &makeprg) == -1
+      echo "makeprg=" . &makeprg
+    endif
+
+    for prg in g:quickmake_prgs
+      if &makeprg == prg
+        let prefix = "> "
+      else
+        let prefix = "  "
+      endif
+      let output .= prefix . prg . (index == len(g:quickmake_prgs) - 1 ? "" : "\n")
+      let index += 1
+    endfor
+    echo output
+  endfunction
+
+  function quickmake#set_prg(...)
+    let matcher = join(a:000)
+    for prg in g:quickmake_prgs
+      if stridx(prg, matcher) != -1
+        exe "set makeprg=" . substitute(prg, " ", "\\\\ ", "g")
+        call quickmake#list_prgs()
+        return
+      endif
+    endfor
+
+    echo "No match found for: " . matcher
+    call quickmake#list_prgs()
+  endfunction
+
   nmap <C-W>t :call quickmake#toggle()<CR>
   tmap <C-W>t <C-W>:call quickmake#toggle()<CR>
   nmap <C-W>y :call quickmake#toggle_full()<CR>
@@ -123,4 +158,6 @@ if !exists("g:quickmake_terminal")
   tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
 
   command! -nargs=* QuickMake call quickmake#make(<f-args>)
+  command! QuickMakeList call quickmake#list_prgs()
+  command! -nargs=* QuickMakeSet call quickmake#set_prg(<f-args>)
 endif
