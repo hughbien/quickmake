@@ -58,7 +58,6 @@ endfunction
 * setting for line numbers
 * setting for default height (or default to full)
 * setting for buffer name
-* setting for echo-ing command
 * README: summary, install, usage, set makeprg, set empty makeprg, % tab repeat
 * github repo
 * `gf` alternative opens in different window (if file is already open, use that window)
