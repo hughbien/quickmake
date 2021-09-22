@@ -113,6 +113,7 @@ if !exists("g:quickmake_terminal")
       call quickmake#destroy()
     endif
 
+    call quickmake#move_to_corner()
     call quickmake#create(full, &makeprg . " " . join(a:000))
   endfunction
 

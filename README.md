@@ -55,11 +55,10 @@ endfunction
 
 ## TODO
 
-* shortcut to set makeprg (via pre-configured list, for autotest/compile/lint/lintfix/custom/etc...)
 * fix for `gf` to open in different window (if file is already open, use that window)
 * setting for default height or full height
 * setting for line numbers
-* setting for makeprg per language
+* setting for makeprg per language or directory/file/glob exists
 * setting for default makeprg per language or directory/file/glob exists
 * instructions for install/usage
 
