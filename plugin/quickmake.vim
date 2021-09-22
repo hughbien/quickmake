@@ -138,6 +138,12 @@ if !exists("g:quickmake_terminal")
 
   function quickmake#set_prg(...)
     let matcher = join(a:000)
+
+    if matcher == ""
+      call quickmake#list_prgs()
+      return
+    endif
+
     for prg in g:quickmake_prgs
       if stridx(prg, matcher) != -1
         exe "set makeprg=" . substitute(prg, " ", "\\\\ ", "g")
@@ -158,6 +164,5 @@ if !exists("g:quickmake_terminal")
   tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
 
   command! -nargs=* QuickMake call quickmake#make(<f-args>)
-  command! QuickMakeList call quickmake#list_prgs()
   command! -nargs=* QuickMakeSet call quickmake#set_prg(<f-args>)
 endif
