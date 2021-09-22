@@ -55,12 +55,14 @@ endfunction
 
 ## TODO
 
-* fix for `gf` to open in different window (if file is already open, use that window)
-* setting for default height or full height
+* fix % usage (evaluate command before moving to corner)
 * setting for line numbers
-* setting for makeprg per language or directory/file/glob exists
-* setting for default makeprg per language or directory/file/glob exists
-* instructions for install/usage
+* setting for default height (or default to full)
+* setting for buffer name
+* setting for echo-ing command
+* README: summary, install, usage, set makeprg, set empty makeprg, % tab repeat
+* github repo
+* `gf` alternative opens in different window (if file is already open, use that window)
 
 ## License
 
