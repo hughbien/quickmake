@@ -1,6 +1,7 @@
 if !exists("g:quickmake_terminal")
   let g:quickmake_height = 20
   let g:quickmake_bufname = "__quickmake__"
+  let g:quickmake_position = "right"
 
   function quickmake#is_created()
     return bufexists(g:quickmake_bufname) == 1
@@ -13,6 +14,23 @@ if !exists("g:quickmake_terminal")
   function quickmake#is_full()
     let quickmake_winnr = bufwinnr(g:quickmake_bufname)
     return winheight(quickmake_winnr) > g:quickmake_height
+  endfunction
+
+  function quickmake#close_last_window()
+    if winnr("$") > 1 " close last window if more than one
+      exe winnr("$") . "wincmd c"
+    endif
+  endfunction
+
+  function quickmake#move_to_corner()
+    if g:quickmake_position == "left"
+      let move_char = "h"
+    else
+      let move_char = "l"
+    endif
+
+    exe winnr("$") . "wincmd " . move_char
+    exe winnr("$") . "wincmd j"
   endfunction
 
   function quickmake#create(full = 0, command = "")
@@ -43,19 +61,20 @@ if !exists("g:quickmake_terminal")
   function quickmake#show(full = 0)
     if quickmake#is_visible()
       " no-op
-    elseif quickmake#is_created() && a:full
-      if winnr("$") > 1 " close last window if more than one
-        execute winnr("$") . "wincmd c"
-      endif
-      exe "vert sbuffer " . g:quickmake_bufname
-    elseif quickmake#is_created()
-      exe "sbuffer " . g:quickmake_bufname
-      exe "resize " . g:quickmake_height
     else
-      if a:full && winnr("$") > 1 " close last window if more than one
-        execute winnr("$") . "wincmd c"
+      if a:full
+        call quickmake#close_last_window()
       endif
-      call quickmake#create(a:full)
+      call quickmake#move_to_corner()
+
+      if quickmake#is_created() && a:full
+        exe "vert sbuffer " . g:quickmake_bufname
+      elseif quickmake#is_created()
+        exe "sbuffer " . g:quickmake_bufname
+        exe "resize " . g:quickmake_height
+      else
+        call quickmake#create(a:full)
+      endif
     endif
   endfunction
 
