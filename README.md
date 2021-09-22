@@ -58,9 +58,14 @@ endfunction
 * setting for line numbers
 * setting for default height (or default to full)
 * setting for buffer name
-* README: summary, install, usage, set makeprg, set empty makeprg, % tab repeat
-* github repo
+* setting for position
+* setting for prgs
+* setting for open immediately, open on error only, hide always (per prg too?)
+* setting for shell wrapper
+* setting for quickfix readfile post run
 * `gf` alternative opens in different window (if file is already open, use that window)
+* README: summary, install, usage, set makeprg, set empty makeprg, % tab repeat, gf
+* github repo
 
 ## License
 

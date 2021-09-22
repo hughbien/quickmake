@@ -1,8 +1,10 @@
-if !exists("g:quickmake_terminal")
+if !exists("g:quickmake")
+  let g:quickmake = 1
   let g:quickmake_height = 20
   let g:quickmake_bufname = "!make"
   let g:quickmake_position = "right"
   let g:quickmake_prgs = ["make"]
+  let g:quickmake_shell = "bash -c"
 
   function quickmake#is_created()
     return bufexists(g:quickmake_bufname) == 1
@@ -41,8 +43,10 @@ if !exists("g:quickmake_terminal")
       let term = "term"
     endif
 
-    if a:command != ""
-      exe term " " . a:command
+    if a:command != "" && g:quickmake_shell != 0
+      exe term . " " . g:quickmake_shell . " \"" . a:command . "\""
+    elseif a:command != ""
+      exe term . " " . a:command
     else
       exe term
     endif
