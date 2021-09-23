@@ -5,6 +5,7 @@ if !exists("g:quickmake")
   let g:quickmake_position = "right"
   let g:quickmake_prgs = ["make"]
   let g:quickmake_shell = "bash -c"
+  let g:quickmake_goto_prefix = ""
 
   function quickmake#is_created()
     return bufexists(g:quickmake_bufname) == 1
@@ -232,12 +233,16 @@ if !exists("g:quickmake")
     let line_no = 0
     let col_no = 0
 
+    if g:quickmake_goto_prefix != ""
+      let file = substitute(file, "^" . g:quickmake_goto_prefix, "", "")
+    endif
+
     if len(parts) > 1
-      let line_no = parts[1]
+      let line_no = substitute(parts[1], "\\D", "", "g")
     endif
 
     if len(parts) > 2
-      let col_no = parts[2]
+      let col_no = substitute(parts[2], "\\D", "", "g")
     endif
 
     let buffername = bufname(file)
