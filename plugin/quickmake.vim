@@ -112,20 +112,24 @@ if !exists("g:quickmake")
     call quickmake#show(1)
   endfunction
 
-  function quickmake#make(...)
+  function quickmake#run(...)
     let full = quickmake#is_full()
     if quickmake#is_created()
       call quickmake#destroy()
     endif
 
     " expand command before moving to corner, or % will be incorrect
-    let parts = [&makeprg]
+    let parts = []
     for part in a:000
       call add(parts, expand(part))
     endfor
 
     call quickmake#move_to_corner()
     call quickmake#create(full, join(parts))
+  endfunction
+
+  function quickmake#make(...)
+    call call("quickmake#run", [&makeprg] + a:000)
   endfunction
 
   function quickmake#list_prgs()
@@ -186,5 +190,6 @@ if !exists("g:quickmake")
   tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
 
   command! -nargs=* -complete=file QuickMake call quickmake#make(<f-args>)
+  command! -nargs=* -complete=file QuickMakeRun call quickmake#run(<f-args>)
   command! -nargs=* -complete=customlist,quickmake#complete_prg QuickMakeSet call quickmake#set_prg(<f-args>)
 endif
