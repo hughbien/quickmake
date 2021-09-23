@@ -196,12 +196,85 @@ if !exists("g:quickmake")
     return matches
   endfunction
 
+  function quickmake#goto_window(secondary = 0)
+    let is_quickmake = buffer_name() == g:quickmake_bufname
+    let num_windows = winnr("$")
+
+    if is_quickmake
+      if a:secondary == 0
+        exe "1wincmd w"
+      elseif num_windows >= 3
+        exe "2wincmd w"
+      elseif num_windows == 1
+        exe "vsplit"
+        exe "1wincmd w"
+      else
+        call quickmake#hide()
+        exe "vsplit"
+        call quickmake#show()
+        exe "2wincmd w"
+      endif
+    else
+      if a:secondary == 0
+        exe "1wincmd w"
+      elseif num_windows == 1
+        exe "vsplit"
+        exe "2wincmd w"
+      else
+        exe "2wincmd w"
+      endif
+    endif
+  endfunction
+
+  function quickmake#goto(secondary = 0)
+    let file = expand("<cfile>")
+    let parts = split(expand("<cWORD>"), ":")
+    let line_no = 0
+    let col_no = 0
+
+    if len(parts) > 1
+      let line_no = parts[1]
+    endif
+
+    if len(parts) > 2
+      let col_no = parts[2]
+    endif
+
+    let buffername = bufname(file)
+    if buffername == ""
+      call quickmake#goto_window(a:secondary)
+      exe "edit " . file
+    endif
+
+    let winnum = bufwinnr(buffername)
+    if winnum == -1
+      call quickmake#goto_window(a:secondary)
+      exe "b " . buffername
+    endif
+
+    if winnum > 0
+      exe winnum . "wincmd w"
+    endif
+
+    if line_no
+      exe "normal " . line_no . "G"
+    endif
+
+    if col_no
+      exe "normal " . col_no . "|"
+    endif
+  endfunction
+
   nmap <C-W>t :call quickmake#toggle()<CR>
   tmap <C-W>t <C-W>:call quickmake#toggle()<CR>
   nmap <C-W>y :call quickmake#toggle_full()<CR>
   tmap <C-W>y <C-W>:call quickmake#toggle_full()<CR>
   nmap <C-W>C :call quickmake#destroy()<CR>
   tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
+  nmap gt :call quickmake#goto()<CR>
+  tmap gt :call quickmake#goto()<CR>
+  nmap gT :call quickmake#goto(1)<CR>
+  tmap gT :call quickmake#goto(1)<CR>
 
   command! -nargs=* -complete=file QuickMake call quickmake#make(<f-args>)
   command! -nargs=* -complete=file QuickMakeRun call quickmake#run(<f-args>)

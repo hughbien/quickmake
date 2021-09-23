@@ -63,7 +63,6 @@ endfunction
 * setting for open immediately, open on error only, hide always (per prg too?)
 * setting for shell wrapper
 * setting for quickfix readfile post run
-* `gf` alternative opens in different window (if file is already open, use that window)
 * README: summary, install, usage, set makeprg, set empty makeprg, % tab repeat, gf
 * github repo
 
