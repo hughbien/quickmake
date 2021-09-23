@@ -55,7 +55,6 @@ endfunction
 
 ## TODO
 
-* fix autocompletion on QuickMakeSet
 * setting for line numbers
 * setting for default height (or default to full)
 * setting for buffer name

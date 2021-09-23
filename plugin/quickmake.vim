@@ -172,11 +172,25 @@ if !exists("g:quickmake")
     call quickmake#list_prgs()
   endfunction
 
-  function quickmake#complete_prg(matcher, command, position)
+  function quickmake#complete_prg(word, command, position)
+    let matcher = join(split(a:command)[1:])
     let matches = []
+
+    " only complete end of phrase, we'll need to remove some words at start
+    let remove_words = len(split(matcher)) - 1
+    if remove_words < 0
+      let remove_words = 0
+    endif
+
+    " no support for cursor in middle of command
+    if a:position < len(a:command)
+      return matches
+    endif
+
     for prg in g:quickmake_prgs
-      if stridx(prg, a:matcher) != -1
-        call add(matches, prg)
+      if stridx(prg, matcher) != -1
+        let prg_with_removed_words = join(split(prg)[remove_words:])
+        call add(matches, prg_with_removed_words)
       endif
     endfor
     return matches
