@@ -1,11 +1,27 @@
 if !exists("g:quickmake")
   let g:quickmake = 1
-  let g:quickmake_height = 20
-  let g:quickmake_bufname = "!make"
-  let g:quickmake_position = "right"
-  let g:quickmake_prgs = ["make"]
-  let g:quickmake_shell = "bash -c"
-  let g:quickmake_goto_prefix = ""
+
+  if !exists("g:quickmake_height")
+    let g:quickmake_height = 20
+  endif
+  if !exists("g:quickmake_bufname")
+    let g:quickmake_bufname = "!make"
+  endif
+  if !exists("g:quickmake_position")
+    let g:quickmake_position = "right"
+  endif
+  if !exists("g:quickmake_prgs")
+    let g:quickmake_prgs = ["make"]
+  endif
+  if !exists("g:quickmake_shell")
+    let g:quickmake_shell = "bash -c"
+  endif
+  if !exists("g:quickmake_goto_prefix")
+    let g:quickmake_goto_prefix = ""
+  endif
+  if !exists("g:quickmake_nu")
+    let g:quickmake_nu = 0
+  endif
 
   function quickmake#is_created()
     return bufexists(g:quickmake_bufname) == 1
@@ -57,8 +73,13 @@ if !exists("g:quickmake")
     endif
 
     exe "file " . g:quickmake_bufname
-    exe "set nonu"
     exe "set buftype=nofile"
+
+    if g:quickmake_nu
+      exe "set nu"
+    else
+      exe "set nonu"
+    endif
 
     if a:command != ""
       exe "setlocal statusline=" . substitute(a:command, " ", "\\\\ ", "g")

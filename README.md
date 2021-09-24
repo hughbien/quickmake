@@ -55,7 +55,6 @@ endfunction
 
 ## TODO
 
-* setting for line numbers
 * setting for buffer name
 * setting for default height (or default to full)
 * setting for position
