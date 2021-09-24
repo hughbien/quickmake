@@ -56,11 +56,10 @@ endfunction
 ## TODO
 
 * setting for line numbers
-* setting for default height (or default to full)
 * setting for buffer name
+* setting for default height (or default to full)
 * setting for position
-* setting for prgs
-* setting for open immediately, open on error only, hide always (per prg too?)
+* setting for open immediately, open on error only, hide always (per prg too)
 * setting for shell wrapper
 * setting for quickfix readfile post run
 * README: summary, install, usage, set makeprg, set empty makeprg, % tab repeat, gf

@@ -59,7 +59,11 @@ if !exists("g:quickmake")
     exe "file " . g:quickmake_bufname
     exe "set nonu"
     exe "set buftype=nofile"
-    exe "setlocal statusline=" . substitute(a:command, " ", "\\\\ ", "g")
+
+    if a:command != ""
+      exe "setlocal statusline=" . substitute(a:command, " ", "\\\\ ", "g")
+      exe "normal :<BS>"
+    endif
   endfunction
 
   function quickmake#destroy()
@@ -277,9 +281,7 @@ if !exists("g:quickmake")
   nmap <C-W>C :call quickmake#destroy()<CR>
   tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
   nmap gt :call quickmake#goto()<CR>
-  tmap gt :call quickmake#goto()<CR>
   nmap gT :call quickmake#goto(1)<CR>
-  tmap gT :call quickmake#goto(1)<CR>
 
   command! -nargs=* -complete=file QuickMake call quickmake#make(<f-args>)
   command! -nargs=* -complete=file QuickMakeRun call quickmake#run(<f-args>)
