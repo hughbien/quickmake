@@ -295,15 +295,6 @@ if !exists("g:quickmake")
     endif
   endfunction
 
-  nmap <C-W>t :call quickmake#toggle()<CR>
-  tmap <C-W>t <C-W>:call quickmake#toggle()<CR>
-  nmap <C-W>y :call quickmake#toggle_full()<CR>
-  tmap <C-W>y <C-W>:call quickmake#toggle_full()<CR>
-  nmap <C-W>C :call quickmake#destroy()<CR>
-  tmap <C-W>C <C-W>:call quickmake#destroy()<CR>
-  nmap gt :call quickmake#goto()<CR>
-  nmap gT :call quickmake#goto(1)<CR>
-
   command! -nargs=* -complete=file QuickMake call quickmake#make(<f-args>)
   command! -nargs=* -complete=file QuickMakeRun call quickmake#run(<f-args>)
   command! -nargs=* -complete=customlist,quickmake#complete_prg QuickMakeSet call quickmake#set_prg(<f-args>)
