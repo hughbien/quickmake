@@ -8,6 +8,8 @@ A build drawer for Vim. Features include:
 * run make commands asynchronously, have output popup in terminal drawer
 * use QuickMake's goto to edit file under cursor
 
+![Quickmake Example](asset/quickmake.gif)
+
 **This is a very alpha Vim Plugin. I actually don't recommend you use it.**
 
 ## Install
