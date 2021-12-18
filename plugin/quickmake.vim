@@ -33,7 +33,8 @@ if !exists("g:quickmake")
 
   function quickmake#is_full()
     let quickmake_winnr = bufwinnr(g:quickmake_bufname)
-    return winheight(quickmake_winnr) > g:quickmake_height
+    let session_height = &lines - &cmdheight - 1 " 1 for status
+    return winheight(quickmake_winnr) >= session_height
   endfunction
 
   function quickmake#close_last_window()
