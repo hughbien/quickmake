@@ -55,10 +55,18 @@ if !exists("g:quickmake")
   endfunction
 
   function quickmake#create(full = 0, command = "")
-    if a:full
-      let term = "vert term"
+    if has('nvim')
+      if a:full
+        let term = "vsplit | term"
+      else
+        let term = "split | term"
+      endif
     else
-      let term = "term"
+      if a:full
+        let term = "vert term"
+      else
+        let term = "term"
+      endif
     endif
 
     if a:command != "" && g:quickmake_shell != 0
@@ -67,6 +75,9 @@ if !exists("g:quickmake")
       exe term . " " . a:command
     else
       exe term
+      if has('nvim')
+        startinsert
+      endif
     endif
 
     if a:full == 0
@@ -74,7 +85,7 @@ if !exists("g:quickmake")
     endif
 
     exe "file " . g:quickmake_bufname
-    exe "set buftype=nofile"
+    " exe "set buftype=nofile"
 
     if g:quickmake_nu
       exe "set nu"
