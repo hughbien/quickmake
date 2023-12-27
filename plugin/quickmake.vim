@@ -236,9 +236,11 @@ if !exists("g:quickmake")
 
   function quickmake#goto_window(secondary = 0)
     let is_quickmake = buffer_name() == g:quickmake_bufname
+    let is_quickfix = getwininfo(win_getid())[0]['quickfix'] == 1
+    let win_height = winheight(win_getid())
     let num_windows = winnr("$")
 
-    if is_quickmake
+    if is_quickmake || is_quickfix
       if a:secondary == 0
         exe "1wincmd w"
       elseif num_windows >= 3
@@ -246,6 +248,11 @@ if !exists("g:quickmake")
       elseif num_windows == 1
         exe "vsplit"
         exe "1wincmd w"
+      elseif is_quickfix
+        exe "cclose"
+        exe "vsplit"
+        exe "copen " . win_height
+        exe "2wincmd w"
       else
         call quickmake#hide()
         exe "vsplit"

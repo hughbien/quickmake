@@ -122,7 +122,6 @@ use `gt` or `gT` to go to it. The behavior is slightly different than Vim's `gf`
 
 * clear function calls on toggles/destroy/goto
 * QuickMakeSet any arbitrary command
-* `goto(1)` splits on single window open
 * `goto()` works with quickfix line/number format
 
 ## License
