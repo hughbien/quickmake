@@ -273,7 +273,7 @@ if !exists("g:quickmake")
 
   function quickmake#goto(secondary = 0)
     let file = expand("<cfile>")
-    let parts = split(expand("<cWORD>"), ":")
+    let parts = split(expand("<cWORD>"), "[:|]")
     let line_no = 0
     let col_no = 0
 
