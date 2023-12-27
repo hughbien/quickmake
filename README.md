@@ -105,8 +105,7 @@ Available commands:
 * `:QuickMakeSet` without any arguments will list available `makeprg`s
 * `:QuickMakeSet build` will set the makeprg. It only uses programs in your `g:quickmake_prgs` list.
   You can pass in a substring. Use `<tab>` for autocompletion.
-
-If you need to set a `makeprg` outside of the list, use `set makeprg=...`.
+* `:QuickMakeSetPrg anything` will set any arbitrary makeprg.
 
 Use `%` as an argument for the current file. I like to hit `<tab>` to autocomplete, so I can run
 the same make command over and over again even if I'm editing a different file.
@@ -121,7 +120,6 @@ use `gt` or `gT` to go to it. The behavior is slightly different than Vim's `gf`
 ## TODO
 
 * clear function calls on toggles/destroy/goto
-* QuickMakeSet any arbitrary command
 
 ## License
 

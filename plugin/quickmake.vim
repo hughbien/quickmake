@@ -210,6 +210,18 @@ if !exists("g:quickmake")
     call quickmake#list_prgs()
   endfunction
 
+  function quickmake#set_prg_free(...)
+    let prg = join(a:000)
+
+    if prg == ""
+      call quickmake#list_prgs()
+      return
+    endif
+
+    exe "set makeprg=" . substitute(prg, " ", "\\\\ ", "g")
+    call quickmake#list_prgs()
+  endfunction
+
   function quickmake#complete_prg(word, command, position)
     let matcher = join(split(a:command)[1:])
     let matches = []
@@ -317,4 +329,5 @@ if !exists("g:quickmake")
   command! -nargs=* -complete=file QuickMake call quickmake#make(<f-args>)
   command! -nargs=* -complete=file QuickMakeRun call quickmake#run(<f-args>)
   command! -nargs=* -complete=customlist,quickmake#complete_prg QuickMakeSet call quickmake#set_prg(<f-args>)
+  command! -nargs=* -complete=customlist,quickmake#complete_prg QuickMakeSetPrg call quickmake#set_prg_free(<f-args>)
 endif
